@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './Login.css';
+import './Register.css';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '../../utils/routes';
 import { isLoggedIn } from '../../utils/loginUtils';
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
@@ -20,10 +21,11 @@ export default function Login() {
 
     const body = {
       email: email,
+      nickname: nickname,
       password: password,
     };
 
-    const response = await fetch(routes.user.login, {
+    const response = await fetch(routes.user.register, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -37,26 +39,26 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>Email:</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <label>Password:</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        <button type="submit">Login</button>
-      </form>
-      <div>
-        <div>Don't have an account?</div>
-        <button onClick={() => navigate('/register')}>Register Now</button>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>Nickname:</label>
+      <input
+        type="text"
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
+      ></input>
+      <label>Email:</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      ></input>
+      <label>Password:</label>
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      ></input>
+      <button type="submit">Register</button>
+    </form>
   );
 }
